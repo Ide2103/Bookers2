@@ -1,32 +1,21 @@
-<main>
-  <p id="notice"></p>
+<p id="notice"></p>
   <div class="container px-5 px-sm-0">
     <div class="row">
       <div class="col-md-3">
-        <h2>User info</h2>
-        <img src="/assets/no_image.jpg" alt="">
-        <table class="table">
-          <tbody>
-            <% @books.each do |book| %>
-            <tr>
-              <th class="name">name</th>
-              <th><%= book.user.name %></th>
-            </tr>
-            <tr>
-              <th class="introduction">introduction</th>
-              <th><%= book.user.introduction %></th>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-        <div class="row">
-          <a class="btn btn-outline-secondary btn-block edit_user_id">
-            <i class="fas fa-user-cog"></i>
-            <svg class="svg-inline--fa fa-user-cog fa-w-20" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user-cog" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg>…</svg>
-            <!-- <i class="fas fa-user-cog"></i> Font Awesome fontawesome.com -->
-          </a>
-        </div>
+        
+        <%= render "info", user: @user %>
+
+
+
         <h2 class="mt-3">New book</h2>
+        <% if @book.errors.any? %>
+        　　<%= @book.errors.count %>errors prohibited this obj from being saved:
+        　　<ul>
+          　　<% @book.errors.full_messages.each do |message| %>
+          　　<li><%= message %></li>
+          　<% end %>
+          　</ul>
+        <% end %>
           <%= form_with model: @book do |f| %>
           <div class="form-group">
             <%= f.label :title, "Title" %>
@@ -43,7 +32,6 @@
       <div class="col-md-8 offset-md-1">
         <h2>Users</h2>
           <table class="table">
-            <% @users.each do |user| %>
             <thead>
               <tr>
                 <th>image</th>
@@ -52,6 +40,7 @@
               </tr>
             </thead>
             <tbody>
+              <% @users.each do |user| %>
               <tr>
                 <td><%= image_tag user.get_profile_image %></td>
                 <td><%= user.name %></td>
@@ -63,4 +52,4 @@
       </div>
     </div>
   </div>
-</main>
+
